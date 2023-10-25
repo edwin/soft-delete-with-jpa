@@ -1,0 +1,1 @@
+# How to Implement Soft Delete with JPA and Spring 3
