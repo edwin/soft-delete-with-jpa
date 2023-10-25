@@ -1,11 +1,8 @@
 package com.edw.model;
 
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLInsert;
-import org.hibernate.annotations.SQLUpdate;
-import org.hibernate.annotations.Type;
-
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+
 import java.io.Serializable;
 
 /**
@@ -18,16 +15,11 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "t_user")
-@SQLDelete(sql = "UPDATE User set status='0'")
-@SQLInsert(sql = "INSERT INTO User (userId, userName, status) VALUES (?, ?, ?)")
-@SQLUpdate(sql = "UPDATE User SET userId = ?, userName = ?, status = ? WHERE id = ? ")
+@SQLDelete(sql = "UPDATE t_user set status='0' where id=?")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(name = "user_id")
-    private Integer userId;
 
     @Column(name = "user_name")
     private String userName;
@@ -38,9 +30,8 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Integer id, Integer userId, String userName, Integer status) {
+    public User(Integer id, String userName, Integer status) {
         this.id = id;
-        this.userId = userId;
         this.userName = userName;
         this.status = status;
     }
@@ -53,13 +44,6 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     public String getUserName() {
         return userName;
@@ -81,7 +65,6 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", userId=" + userId +
                 ", userName='" + userName + '\'' +
                 ", status=" + status +
                 '}';
